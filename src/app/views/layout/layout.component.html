@@ -1,0 +1,39 @@
+
+<div class="app-layout">
+  <!-- Sidebar -->
+<aside class="sidebar">
+  <div class="brand">
+    <span class="logo">MS</span>
+    <span class="brand-text">Management</span>
+  </div>
+
+  <nav class="nav">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+      <span class="icon">🏠</span>
+      <span class="label">Dashboard</span>
+    </a>
+
+    <a routerLink="/employee" routerLinkActive="active" class="nav-link">
+      <span class="icon">👥</span>
+      <span class="label">Employees</span>
+    </a>
+
+    <a routerLink="/leave-request" routerLinkActive="active" class="nav-link">
+      <span class="icon">📝</span>
+      <span class="label">Leave Request</span>
+    </a>
+  </nav>
+
+  <div class="logout" (click)="onLogout()">
+    <a  class="nav-link">
+      <span class="icon">🚪</span>
+      <span class="label">Logout</span>
+    </a>
+  </div>
+</aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

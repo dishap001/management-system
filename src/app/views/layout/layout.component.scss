@@ -1,0 +1,105 @@
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background-color: #1e293b; // dark blue-gray
+  color: #f8fafc; // light text
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // ensures logout stays at bottom
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: all 0.3s ease;
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .logo {
+      background: #3b82f6; // blue accent
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .brand-text {
+      color: #f1f5f9;
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 4px solid transparent;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      &.active {
+        background: rgba(59, 130, 246, 0.2);
+        border-left: 4px solid #3b82f6;
+        color: #fff;
+        font-weight: 500;
+      }
+
+      .icon {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .logout {
+    margin-top: auto;
+    padding-bottom: 1rem;
+
+    .nav-link {
+      color: #f87171; // red text for logout
+      &:hover {
+        background: rgba(248, 113, 113, 0.2);
+        color: #fff;
+      }
+    }
+  }
+}
+
+// Responsive: collapse sidebar on small screens
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+
+    .brand-text,
+    .label {
+      display: none;
+    }
+  }
+}
+.app-layout {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 220px; // same as sidebar width
+  padding: 1rem;
+  background: #f9fafb;
+  min-height: 100vh;
+}

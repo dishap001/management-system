@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="heading">Sign In</div>
+    <form action="" class="form">
+      <input required="" [(ngModel)]="loginObj.userName" class="input" type="email" name="userName" id="email" placeholder="E-mail">
+      <input required="" [(ngModel)]="loginObj.password" class="input" type="password" name="password" id="password" placeholder="Password">
+      <span class="forgot-password"><a href="#">Forgot Password ?</a></span>
+      <input class="login-button" (click)="onLogin()" type="submit" value="Sign In">
+      
+    </form>
+  
+    
+    
+  </div>
