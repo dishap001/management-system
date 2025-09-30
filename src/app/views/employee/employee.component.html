@@ -1,1 +1,140 @@
-<p>employee works!</p>
+<div class="employee-container">
+  <div class="header">
+    <h2>Employee List</h2>
+    <button class="btn-add" (click)="showModal = true">Add Employee</button>
+  </div>
+
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Contact No</th>
+        <th>Email</th>
+        <th>Dept ID</th>
+        <th>Gender</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees | slice : 0 : 5">
+        <td>{{ emp.employeeId }}</td>
+        <td>{{ emp.employeeName }}</td>
+        <td>{{ emp.contactNo }}</td>
+        <td>{{ emp.emailId }}</td>
+        <td>{{ emp.deptId }}</td>
+        <td>{{ emp.gender }}</td>
+        <td>{{ emp.role }}</td>
+        <td>
+          <button class="btn-edit">Edit</button>
+          <button class="btn-delete">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h3>Add Employee</h3>
+      <form>
+        <!-- <div class="form-row">
+          <label>ID:</label>
+          <input
+            type="number"
+            [(ngModel)]="employeeObj.employeeId"
+            name="employeeId"
+            required
+          />
+        </div> -->
+        <div class="form-row">
+          <label>Name:</label>
+          <input
+            type="text"
+            [(ngModel)]="employeeObj.employeeName"
+            name="employeeName"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <label>Contact No:</label>
+          <input
+            type="text"
+            [(ngModel)]="employeeObj.contactNo"
+            name="contactNo"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <label>Email:</label>
+          <input
+            type="email"
+            [(ngModel)]="employeeObj.emailId"
+            name="emailId"
+            required
+          />
+        </div>
+        <!-- Parent Dept ID -->
+        <div class="form-row">
+          <label>Parent Dept:</label>
+          <select
+            [(ngModel)]="parentDeptId"
+            (change)="onDeptChange()"
+            name="parentDeptId"
+            required
+          >
+            <option value="">Select Parent Dept</option>
+            <option
+              *ngFor="let dept of parentDepartmentList"
+              [value]="dept.departmentId"
+            >
+              {{ dept.departmentName }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Child Dept ID -->
+        <div class="form-row">
+          <label>Child Dept:</label>
+          <select [(ngModel)]="employeeObj.deptId" name="deptId">
+            <option value="">Select Child Dept</option>
+            <option
+              *ngFor="let dept of childDepartmentList"
+              [value]="dept.departmentId"
+            >
+              {{ dept.departmentName }}
+            </option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Password:</label>
+          <input
+            type="password"
+            [(ngModel)]="employeeObj.password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <label>Gender:</label>
+          <select [(ngModel)]="employeeObj.gender" name="gender" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" (click)="onSaveEmployee()" class="btn-submit">
+            Submit
+          </button>
+          <button type="button" class="btn-close" (click)="showModal = false">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
