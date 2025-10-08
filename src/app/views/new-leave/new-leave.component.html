@@ -1,1 +1,105 @@
-<p>new-leave works!</p>
+<div class="leave-portal">
+  <!-- Header -->
+  <div class="portal-header">
+    <h2>Leave Portal</h2>
+    <button class="btn-primary" (click)="openModal()">+ Add New</button>
+  </div>
+
+  <!-- Leave Cards -->
+  <div class="card-grid">
+    <div class="leave-card" *ngFor="let leave of leaves">
+      <div class="card-header">
+        <h3>{{ leave.employeeName }}</h3>
+        <span class="status" [ngClass]="leave.status.toLowerCase()">{{
+          leave.status
+        }}</span>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Type:</strong> {{ leave.type }}</p>
+        <p><strong>Start:</strong> {{ leave.startDate | date }}</p>
+        <p><strong>End:</strong> {{ leave.endDate | date }}</p>
+        <p><strong>Reason:</strong> {{ leave.reason }}</p>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-outline" (click)="onEdit(leave)">Edit</button>
+        <button class="btn-success" (click)="onApprove(leave)">Approve</button>
+        <button class="btn-danger" (click)="onCancel(leave)">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ isEdit ? "Edit Leave" : "Add New Leave" }}</h3>
+      </div>
+
+      <form [formGroup]="leaveForm" (ngSubmit)="submitForm()" class="form">
+        <div class="form-row">
+          <label>Employee</label>
+          <select formControlName="employeeId">
+    <option value="">Select Employee</option>
+    <option *ngFor="let emp of employees" [value]="emp.id">
+      {{ emp.name }}
+    </option>
+  </select>
+        </div>
+
+        <div class="form-row">
+          <label>Leave Type</label>
+          <select formControlName="type">
+            <option value="">Select Type</option>
+            <option
+              *ngFor="let item of leaveTypeList()"
+              [value]="item.leaveTypeId"
+            >
+              {{ item.typeName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Start Date</label>
+            <input type="date" formControlName="startDate" />
+          </div>
+          <div class="form-row">
+            <label>End Date</label>
+            <input type="date" formControlName="endDate" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Status</label>
+          <select formControlName="status">
+            <option>Pending</option>
+            <option>Approved</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Request Date</label>
+          <input type="date" formControlName="requestDate" />
+        </div>
+        <div class="form-row">
+          <label>Reason</label>
+          <textarea
+            formControlName="reason"
+            rows="3"
+            placeholder="Enter reason..."
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn-primary">Submit</button>
+          <button type="button" class="btn-secondary" (click)="closeModal()">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

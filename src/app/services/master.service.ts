@@ -47,4 +47,7 @@ export class MasterService {
   getAllEarnedLeaves(): Observable<any> {
     return this.http.get('/api/EmployeeManagement/GetAllEarnedLeaves');
   }
+  getLeaveTypes(): Observable<any> {
+    return this.http.get('/api/EmployeeManagement/GetLeaveTypes');
+  }
 }
