@@ -1,12 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EarnedLeave } from '../model/master';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MasterService {
-  constructor(private http: HttpClient) {}
+
+    loggedUserData: any = null;
+
+  constructor(private http: HttpClient) {
+    const storedUser = localStorage.getItem('leaveUser');
+    if (storedUser) {
+      this.loggedUserData = JSON.parse(storedUser);
+    }
+  }
+ 
 
   getDepartments(): Observable<any> {
     // just call the API path; proxy will handle the target
@@ -24,5 +34,17 @@ export class MasterService {
   }
   getAllEmployees(): Observable<any> {
     return this.http.get('/api/EmployeeManagement/GetAllEmployees');
+  }
+  deleteEmployee(id: number): Observable<any> {
+    return this.http.delete(`/api/EmployeeManagement/DeleteEmployee/${id}`);
+  }
+  updateEmployee(obj: any): Observable<any> {
+    return this.http.put('/api/EmployeeManagement/UpdateEmployee', obj);
+  }
+  addEarnedLeave(emp: EarnedLeave): Observable<EarnedLeave> {
+    return this.http.post<any>('/api/EmployeeManagement/AddNewEarnedLeave', emp);
+  }
+  getAllEarnedLeaves(): Observable<any> {
+    return this.http.get('/api/EmployeeManagement/GetAllEarnedLeaves');
   }
 }

@@ -15,12 +15,12 @@ import { HttpParams } from '@angular/common/http';
 })
 export class EmployeeComponent implements OnInit {
   showModal = false;
+  isEdit = false;   // flag to track add/edit
   employeeObj: Employee = new Employee();
   parentDeptId: string = '';
   parentDepartmentList: parentDept[] = [];
   childDepartmentList: parentDept[] = [];
   employees: Employee[] = [];
-  employeeList: Employee[] = [];
   masterService = inject(MasterService);
 
   ngOnInit(): void {
@@ -36,7 +36,6 @@ export class EmployeeComponent implements OnInit {
 
   onDeptChange() {
     if (this.parentDeptId) {
-      // Call service passing query param
       const params = new HttpParams().set('deptId', this.parentDeptId);
       this.masterService.getChildDepartments(params).subscribe((res: any) => {
         this.childDepartmentList = res.data;
@@ -45,38 +44,72 @@ export class EmployeeComponent implements OnInit {
       this.childDepartmentList = [];
     }
   }
+
   loadEmployees() {
     this.masterService.getAllEmployees().subscribe((res: any) => {
       this.employees = res;
     });
   }
+
+  // open modal for add
+  openAddModal() {
+    this.employeeObj = new Employee();  // reset
+    this.parentDeptId = '';
+    this.isEdit = false;
+    this.showModal = true;
+  }
+
+  // open modal for edit
+  onEdit(emp: Employee) {
+    this.employeeObj = { ...emp }; // clone object so form binds
+    this.parentDeptId = emp.deptId.toString(); 
+    this.isEdit = true;
+    this.showModal = true;
+  }
+
   onSaveEmployee() {
     const payload = {
-      employeeId: 0, // backend will generate ID
+      employeeId: this.isEdit ? this.employeeObj.employeeId : 0,
       employeeName: this.employeeObj.employeeName,
       contactNo: this.employeeObj.contactNo,
       emailId: this.employeeObj.emailId,
-      deptId: Number(this.parentDeptId), // parent dept is required
+      deptId: Number(this.parentDeptId),
       password: this.employeeObj.password,
       gender: this.employeeObj.gender,
-      role: this.employeeObj.role || 'Employee', // default role if not chosen
+      role: this.employeeObj.role || 'Employee',
       createdDate: new Date().toISOString(),
     };
-    console.log('Form Payload:', payload);
-    this.showModal = false;
-    // this.masterService.createNewEmployee(payload).subscribe({
-    //   next: (res: any) => {
-    //     if (res.result) {
-    //       alert('Employee Created successfully');
-    //       this.employeeObj = new Employee();
-    //       this.loadEmployees();
-    //       this.showModal = false;
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error("Error creating employee:", err);
-    //     alert("Something went wrong while creating employee.");
-    //   }
-    // });
+
+    if (this.isEdit) {
+      // call update API
+      this.masterService.updateEmployee(payload).subscribe({
+        next: () => {
+          alert("Employee updated successfully");
+          this.loadEmployees();
+          this.showModal = false;
+        },
+        error: (err) => console.error("Update failed:", err)
+      });
+    } else {
+      // call add API
+      this.masterService.createNewEmployee(payload).subscribe({
+        next: () => {
+          alert("Employee created successfully");
+          this.loadEmployees();
+          this.showModal = false;
+        },
+        error: (err) => console.error("Create failed:", err)
+      });
+    }
+  }
+
+  onDelete(id: number) {
+    const isDelete = confirm("Are you sure to delete this employee?");
+    if (isDelete) {
+      this.masterService.deleteEmployee(id).subscribe(() => {
+        alert("Employee deleted successfully");
+        this.loadEmployees();
+      });
+    }
   }
 }

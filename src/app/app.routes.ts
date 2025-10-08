@@ -4,6 +4,7 @@ import { LayoutComponent } from './views/layout/layout.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { EmployeeComponent } from './views/employee/employee.component';
 import { NewLeaveComponent } from './views/new-leave/new-leave.component';
+import { EarnedLeaveComponent } from './views/earned-leave/earned-leave.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,8 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'employee', component: EmployeeComponent },
       { path: 'leave-request', component: NewLeaveComponent },
+            { path: 'earned-leave', component: EarnedLeaveComponent },
+
     ],
   },
 ];

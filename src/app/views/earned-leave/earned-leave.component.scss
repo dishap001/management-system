@@ -1,0 +1,187 @@
+.leave-portal {
+  padding: 20px;
+
+  .portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .btn-add {
+      background: #007bff;
+      color: #fff;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .leave-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+  }
+
+  .leave-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    .leave-info {
+      margin-bottom: 10px;
+
+      p {
+        margin: 4px 0;
+      }
+
+      .Approved {
+        color: green;
+        font-weight: 600;
+      }
+      .Pending {
+        color: orange;
+        font-weight: 600;
+      }
+      .Cancelled {
+        color: red;
+        font-weight: 600;
+      }
+    }
+
+    .leave-actions {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &.btn-edit {
+          background: #ffc107;
+          color: #000;
+        }
+        &.btn-approve {
+          background: #28a745;
+          color: #fff;
+        }
+        &.btn-cancel {
+          background: #dc3545;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      max-width: 90%;
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+          margin: 0;
+        }
+
+        .close-btn {
+          background: none;
+          border: none;
+          font-size: 22px;
+          cursor: pointer;
+        }
+      }
+
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+
+        label {
+          font-size: 14px;
+          margin-top: 10px;
+        }
+
+        input, select {
+          margin-top: 5px;
+          padding: 6px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+
+        .btn-save {
+          background: #007bff;
+          color: #fff;
+          padding: 6px 12px;
+          border: none;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+
+        .btn-close {
+          background: #6c757d;
+          color: #fff;
+          padding: 6px 12px;
+          border: none;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+select,
+input[type='number'],
+input[type='date'] {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.error {
+  color: #d33;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}

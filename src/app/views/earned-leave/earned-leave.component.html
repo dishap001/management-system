@@ -1,0 +1,56 @@
+<div class="leave-portal">
+  <div class="portal-header">
+    <h2>Earned Leave Portal</h2>
+    <button class="btn-add" (click)="openAddModal()">+ Add Earned Leave</button>
+  </div>
+
+  <!-- Earned Leave Cards -->
+  <div class="leave-cards">
+    <div class="leave-card" *ngFor="let leave of earnedLeaves">
+      <div class="leave-info">
+        <p><strong>Employee:</strong> {{ leave.employeeName }}</p>
+        <p><strong>Total Earned Leaves:</strong> {{ leave.totalEarnedLeaves }}</p>
+        <!-- <p><strong>Total Sick Leaves:</strong> {{ leave.totalSickEarnedLeaves }}</p> -->
+        <p><strong>Last Updated:</strong> {{ leave.lastUpdatedDate | date: 'medium' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Add Earned Leave -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Earned Leave</h3>
+        <button class="close-btn" (click)="showModal = false">&times;</button>
+      </div>
+
+      <form [formGroup]="addLeaveForm" (ngSubmit)="onSaveAddForm()">
+        <div class="form-group">
+          <label>Employee:</label>
+          <select formControlName="employeeId">
+            <option value="">Select Employee</option>
+             <option *ngFor="let emp of employeeList" [value]="emp.employeeId">
+              {{ emp.name || emp.fullName || emp.employeeName }}
+            </option>
+          </select>
+          <div *ngIf="addLeaveForm.get('employeeId')?.touched && addLeaveForm.get('employeeId')?.invalid" class="error">
+            Employee is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Earned Leave Count:</label>
+          <input type="number" formControlName="earnedLeaveCount" />
+          <div *ngIf="addLeaveForm.get('earnedLeaveCount')?.touched && addLeaveForm.get('earnedLeaveCount')?.invalid" class="error">
+            Enter a valid number (≥1).
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn-save">Save</button>
+          <button type="button" class="btn-close" (click)="showModal = false">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

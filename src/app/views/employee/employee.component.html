@@ -1,7 +1,7 @@
 <div class="employee-container">
   <div class="header">
     <h2>Employee List</h2>
-    <button class="btn-add" (click)="showModal = true">Add Employee</button>
+    <button class="btn-add" (click)="openAddModal()">Add Employee</button>
   </div>
 
   <table class="employee-table">
@@ -27,8 +27,8 @@
         <td>{{ emp.gender }}</td>
         <td>{{ emp.role }}</td>
         <td>
-          <button class="btn-edit">Edit</button>
-          <button class="btn-delete">Delete</button>
+          <button type="button" class="btn-edit" (click)="onEdit(emp)">Edit</button>
+          <button type="button" class="btn-delete" (click)="onDelete(emp.employeeId)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -37,85 +37,48 @@
   <!-- Modal -->
   <div class="modal" *ngIf="showModal">
     <div class="modal-content">
-      <h3>Add Employee</h3>
+      <h3>{{ isEdit ? 'Edit Employee' : 'Add Employee' }}</h3>
       <form>
-        <!-- <div class="form-row">
-          <label>ID:</label>
-          <input
-            type="number"
-            [(ngModel)]="employeeObj.employeeId"
-            name="employeeId"
-            required
-          />
-        </div> -->
         <div class="form-row">
           <label>Name:</label>
-          <input
-            type="text"
-            [(ngModel)]="employeeObj.employeeName"
-            name="employeeName"
-            required
-          />
+          <input type="text" [(ngModel)]="employeeObj.employeeName" name="employeeName" required />
         </div>
+
         <div class="form-row">
           <label>Contact No:</label>
-          <input
-            type="text"
-            [(ngModel)]="employeeObj.contactNo"
-            name="contactNo"
-            required
-          />
+          <input type="text" [(ngModel)]="employeeObj.contactNo" name="contactNo" required />
         </div>
+
         <div class="form-row">
           <label>Email:</label>
-          <input
-            type="email"
-            [(ngModel)]="employeeObj.emailId"
-            name="emailId"
-            required
-          />
+          <input type="email" [(ngModel)]="employeeObj.emailId" name="emailId" required />
         </div>
-        <!-- Parent Dept ID -->
+
         <div class="form-row">
           <label>Parent Dept:</label>
-          <select
-            [(ngModel)]="parentDeptId"
-            (change)="onDeptChange()"
-            name="parentDeptId"
-            required
-          >
+          <select [(ngModel)]="parentDeptId" (change)="onDeptChange()" name="parentDeptId" required>
             <option value="">Select Parent Dept</option>
-            <option
-              *ngFor="let dept of parentDepartmentList"
-              [value]="dept.departmentId"
-            >
+            <option *ngFor="let dept of parentDepartmentList" [value]="dept.departmentId">
               {{ dept.departmentName }}
             </option>
           </select>
         </div>
 
-        <!-- Child Dept ID -->
         <div class="form-row">
           <label>Child Dept:</label>
           <select [(ngModel)]="employeeObj.deptId" name="deptId">
             <option value="">Select Child Dept</option>
-            <option
-              *ngFor="let dept of childDepartmentList"
-              [value]="dept.departmentId"
-            >
+            <option *ngFor="let dept of childDepartmentList" [value]="dept.departmentId">
               {{ dept.departmentName }}
             </option>
           </select>
         </div>
+
         <div class="form-row">
           <label>Password:</label>
-          <input
-            type="password"
-            [(ngModel)]="employeeObj.password"
-            name="password"
-            required
-          />
+          <input type="password" [(ngModel)]="employeeObj.password" name="password" required />
         </div>
+
         <div class="form-row">
           <label>Gender:</label>
           <select [(ngModel)]="employeeObj.gender" name="gender" required>
@@ -128,11 +91,9 @@
 
         <div class="modal-actions">
           <button type="button" (click)="onSaveEmployee()" class="btn-submit">
-            Submit
+            {{ isEdit ? 'Update' : 'Submit' }}
           </button>
-          <button type="button" class="btn-close" (click)="showModal = false">
-            Close
-          </button>
+          <button type="button" class="btn-close" (click)="showModal = false">Close</button>
         </div>
       </form>
     </div>

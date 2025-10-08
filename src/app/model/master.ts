@@ -25,3 +25,27 @@ export interface parentDept {
   departmentName: string;
   departmentLogo: string;
 }
+
+export interface LeaveType{
+  leaveTypeId: number;
+  typeName: string;
+}
+ export interface EarnedLeave {
+  earnedLeaveId: number;
+  employeeId: number;
+  totalEarnedLeave: number;
+  totalSickEarnedLeave?: number;
+  lastUpdatedDate: string;
+  employeeName?: string;
+ }
+
+ export interface LeaveRequest {
+  leaveId: number;
+  employeeId: number;
+  leaveTypeId: number;
+  startDate: string;
+  endDate: string;
+  status: string;
+  reason: string;
+  requestedDate: string;
+}
