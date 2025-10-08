@@ -50,4 +50,7 @@ export class MasterService {
   getLeaveTypes(): Observable<any> {
     return this.http.get('/api/EmployeeManagement/GetLeaveTypes');
   }
+  createNewLeaveRequest(obj: any): Observable<any> {
+    return this.http.post('/api/EmployeeManagement/CreateNewLeaveRequest', obj);
+  }
 }

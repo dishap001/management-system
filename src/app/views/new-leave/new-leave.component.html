@@ -37,69 +37,66 @@
         <h3>{{ isEdit ? "Edit Leave" : "Add New Leave" }}</h3>
       </div>
 
-      <form [formGroup]="leaveForm" (ngSubmit)="submitForm()" class="form">
-        <div class="form-row">
-          <label>Employee</label>
-          <select formControlName="employeeId">
-    <option value="">Select Employee</option>
-    <option *ngFor="let emp of employees" [value]="emp.id">
-      {{ emp.name }}
-    </option>
-  </select>
-        </div>
+    <form [formGroup]="leaveForm" class="form">
+  <div class="form-row">
+    <label>Employee</label>
+    <select
+      [disabled]="masterService.loggedUserData?.role === 'Employee'"
+      formControlName="employeeId"
+    >
+      <option value="">Select Employee</option>
+      <option *ngFor="let emp of employees" [value]="emp.id">
+        {{ emp.name }}
+      </option>
+    </select>
+  </div>
 
-        <div class="form-row">
-          <label>Leave Type</label>
-          <select formControlName="type">
-            <option value="">Select Type</option>
-            <option
-              *ngFor="let item of leaveTypeList()"
-              [value]="item.leaveTypeId"
-            >
-              {{ item.typeName }}
-            </option>
-          </select>
-        </div>
+  <div class="form-row">
+    <label>Leave Type</label>
+    <select formControlName="leaveTypeId">
+      <option value="">Select Type</option>
+      <option *ngFor="let item of leaveTypeList()" [value]="item.leaveTypeId">
+        {{ item.typeName }}
+      </option>
+    </select>
+  </div>
 
-        <div class="form-grid">
-          <div class="form-row">
-            <label>Start Date</label>
-            <input type="date" formControlName="startDate" />
-          </div>
-          <div class="form-row">
-            <label>End Date</label>
-            <input type="date" formControlName="endDate" />
-          </div>
-        </div>
+  <div class="form-grid">
+    <div class="form-row">
+      <label>Start Date</label>
+      <input type="date" formControlName="startDate" />
+    </div>
+    <div class="form-row">
+      <label>End Date</label>
+      <input type="date" formControlName="endDate" />
+    </div>
+  </div>
 
-        <div class="form-row">
-          <label>Status</label>
-          <select formControlName="status">
-            <option>Pending</option>
-            <option>Approved</option>
-            <option>Cancelled</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label>Request Date</label>
-          <input type="date" formControlName="requestDate" />
-        </div>
-        <div class="form-row">
-          <label>Reason</label>
-          <textarea
-            formControlName="reason"
-            rows="3"
-            placeholder="Enter reason..."
-          ></textarea>
-        </div>
+  <div class="form-row">
+    <label>Status</label>
+    <select formControlName="status">
+      <option>Pending</option>
+      <option>Approved</option>
+      <option>Cancelled</option>
+    </select>
+  </div>
 
-        <div class="modal-footer">
-          <button type="submit" class="btn-primary">Submit</button>
-          <button type="button" class="btn-secondary" (click)="closeModal()">
-            Close
-          </button>
-        </div>
-      </form>
+  <div class="form-row">
+    <label>Request Date</label>
+    <input type="date" formControlName="requestDate" />
+  </div>
+
+  <div class="form-row">
+    <label>Reason</label>
+    <textarea formControlName="reason" rows="3" placeholder="Enter reason..."></textarea>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" (click)="onSave()" class="btn-primary">Submit</button>
+    <button type="button" class="btn-secondary" (click)="closeModal()">Close</button>
+  </div>
+</form>
+
     </div>
   </div>
 </div>
