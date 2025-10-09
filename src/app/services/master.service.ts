@@ -7,8 +7,7 @@ import { EarnedLeave } from '../model/master';
   providedIn: 'root',
 })
 export class MasterService {
-
-    loggedUserData: any = null;
+  loggedUserData: any = null;
 
   constructor(private http: HttpClient) {
     const storedUser = localStorage.getItem('leaveUser');
@@ -16,7 +15,6 @@ export class MasterService {
       this.loggedUserData = JSON.parse(storedUser);
     }
   }
- 
 
   getDepartments(): Observable<any> {
     // just call the API path; proxy will handle the target
@@ -42,7 +40,10 @@ export class MasterService {
     return this.http.put('/api/EmployeeManagement/UpdateEmployee', obj);
   }
   addEarnedLeave(emp: EarnedLeave): Observable<EarnedLeave> {
-    return this.http.post<any>('/api/EmployeeManagement/AddNewEarnedLeave', emp);
+    return this.http.post<any>(
+      '/api/EmployeeManagement/AddNewEarnedLeave',
+      emp
+    );
   }
   getAllEarnedLeaves(): Observable<any> {
     return this.http.get('/api/EmployeeManagement/GetAllEarnedLeaves');
@@ -52,5 +53,14 @@ export class MasterService {
   }
   createNewLeaveRequest(obj: any): Observable<any> {
     return this.http.post('/api/EmployeeManagement/CreateNewLeaveRequest', obj);
+  }
+  getAllLeaveRequestByEmpId(empId: number): Observable<any> {
+    const params = { id: empId.toString() };
+    return this.http.get('/api/EmployeeManagement/GetAllLeaveRequestByEmpId', {
+      params,
+    });
+  }
+  getAllLeaveRequests(): Observable<any> {
+    return this.http.get('/api/EmployeeManagement/GetAllLeaveRequest');
   }
 }
