@@ -1,13 +1,39 @@
 <div class="container">
-    <div class="heading">Sign In</div>
-    <form action="" class="form">
-      <input required="" [(ngModel)]="loginObj.userName" class="input" type="email" name="userName" id="email" placeholder="E-mail">
-      <input required="" [(ngModel)]="loginObj.password" class="input" type="password" name="password" id="password" placeholder="Password">
-      <span class="forgot-password"><a href="#">Forgot Password ?</a></span>
-      <input class="login-button" (click)="onLogin()" type="submit" value="Sign In">
-      
-    </form>
-  
-    
-    
-  </div>
+  <div class="heading">Sign In</div>
+
+  <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)" class="form" novalidate>
+    <!-- Email -->
+    <input
+      required
+      [(ngModel)]="loginObj.userName"
+      name="userName"
+      #userName="ngModel"
+      class="input"
+      type="email"
+      placeholder="E-mail"
+    />
+    <div *ngIf="userName.invalid && (userName.touched || loginForm.submitted)" class="error-msg">
+      Email is required and must be valid.
+    </div>
+
+    <!-- Password -->
+    <input
+      required
+      minlength="4"
+      [(ngModel)]="loginObj.password"
+      name="password"
+      #password="ngModel"
+      class="input"
+      type="password"
+      placeholder="Password"
+    />
+    <div *ngIf="password.invalid && (password.touched || loginForm.submitted)" class="error-msg">
+      Password is required (min 4 characters).
+    </div>
+
+    <!-- Submit Button -->
+    <button class="login-button" type="submit">
+      Sign In
+    </button>
+  </form>
+</div>

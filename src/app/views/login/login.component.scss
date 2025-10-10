@@ -93,3 +93,12 @@
     }
   }
 }
+.error-msg {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.input.ng-invalid.ng-touched {
+  border: 1px solid #e74c3c;
+}

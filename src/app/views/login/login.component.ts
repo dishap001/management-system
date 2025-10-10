@@ -1,35 +1,50 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';  
-import { Router } from '@angular/router';         
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']  
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginObj: any = { username: '', password: '' };
+  loginObj = { userName: '', password: '' };
 
   http = inject(HttpClient);
   router = inject(Router);
   platformId = inject(PLATFORM_ID);
 
-  onLogin() {
+  onLogin(form: NgForm) {
+    if (!form.valid) {
+      // Mark all fields as touched to show validation errors
+      form.control.markAllAsTouched();
+      return;
+    }
+
     if (isPlatformBrowser(this.platformId)) {
-      // safe to access localStorage and window/document
-      this.http.post('/api/EmployeeManagement/Login', this.loginObj)
-        .subscribe((res: any) => {
+      const payload = {
+        userName: this.loginObj.userName.trim(),
+        password: this.loginObj.password.trim()
+      };
+
+      this.http.post('/api/EmployeeManagement/Login', payload).subscribe({
+        next: (res: any) => {
           if (res.result) {
             localStorage.setItem('leaveUser', JSON.stringify(res.data));
             this.router.navigateByUrl('dashboard');
           } else {
-            alert(res.message);
+            alert(res.message || 'Invalid credentials.');
           }
-        });
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          alert('Something went wrong. Please try again.');
+        }
+      });
     }
   }
 }
