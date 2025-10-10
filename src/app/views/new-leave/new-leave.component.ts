@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } 
 import { MasterService } from '../../services/master.service';
 
 interface Leave {
-  id?: number;
+  leaveId: number;
   employeeId: number;
   employeeName: string;
   typeName: string;
@@ -156,10 +156,20 @@ export class NewLeaveComponent implements OnInit {
   onEdit(leave: Leave) {
     this.openModal(true, leave);
   }
+onApprove(leaveId: number) {
+  this.masterService.changeLeaveStatus(leaveId, 'Approved').subscribe({
+    next: (res: any) => {
+      console.log('Approve API Response:', res);
+      // Show the message coming from the API directly
+      alert(res?.message || '⚠️ No response message from server.');
+    },
+    error: (err) => {
+      console.error('Error approving leave:', err);
+      alert('⚠️ Something went wrong while approving leave.');
+    }
+  });
+}
 
-  onApprove(leave: Leave) {
-    leave.status = 'Approved';
-  }
 
   onCancel(leave: Leave) {
     leave.status = 'Cancelled';

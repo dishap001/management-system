@@ -1,1 +1,62 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+
+  <!-- Employee Dashboard -->
+  <ng-container *ngIf="isEmployee; else hrDashboard">
+    <div *ngIf="employeeData; else loading" class="cards-grid">
+      <div class="dashboard-card earned-leave">
+        <h3>Earned Leave</h3>
+        <p>{{ employeeData.earnedLeave }}</p>
+      </div>
+
+      <div class="dashboard-card new-leaves">
+        <h3>New Leaves</h3>
+        <p>{{ employeeData.totalNewLeaves }}</p>
+      </div>
+
+      <div class="dashboard-card approved-leaves">
+        <h3>Approved Leaves</h3>
+        <p>{{ employeeData.totalApprovedLeaves }}</p>
+      </div>
+
+      <div class="dashboard-card canceled-leaves">
+        <h3>Cancelled Leaves</h3>
+        <p>{{ employeeData.totalCanceledLeave }}</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- HR/Admin Dashboard -->
+  <ng-template #hrDashboard>
+    <div *ngIf="hrData; else loading" class="cards-grid">
+      <div class="dashboard-card total-employees">
+        <h3>Total Employees</h3>
+        <p>{{ hrData.totalEmployee }}</p>
+      </div>
+
+      <div class="dashboard-card total-leaves">
+        <h3>Total Leaves</h3>
+        <p>{{ hrData.totalLeaves }}</p>
+      </div>
+
+      <div class="dashboard-card new-leaves">
+        <h3>New Leaves</h3>
+        <p>{{ hrData.totalNewLeaves }}</p>
+      </div>
+
+      <div class="dashboard-card approved-leaves">
+        <h3>Approved Leaves</h3>
+        <p>{{ hrData.totalApprovedLeaves }}</p>
+      </div>
+
+      <div class="dashboard-card canceled-leaves">
+        <h3>Cancelled Leaves</h3>
+        <p>{{ hrData.totalCanceledLeave }}</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #loading>
+    <p>Loading dashboard data...</p>
+  </ng-template>
+</div>

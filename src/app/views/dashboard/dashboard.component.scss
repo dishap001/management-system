@@ -1,0 +1,48 @@
+.dashboard-container {
+  padding: 1.5rem;
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .dashboard-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    p {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  /* Optional color variants */
+  .earned-leave p { color: #047857; }
+  .new-leaves p { color: #b45309; }
+  .approved-leaves p { color: #065f46; }
+  .canceled-leaves p { color: #b91c1c; }
+  .total-employees p { color: #1d4ed8; }
+  .total-leaves p { color: #7c3aed; }
+}

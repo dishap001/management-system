@@ -63,4 +63,16 @@ export class MasterService {
   getAllLeaveRequests(): Observable<any> {
     return this.http.get('/api/EmployeeManagement/GetAllLeaveRequest');
   }
+changeLeaveStatus(leaveId: number, status: string) {
+  const url = `/api/EmployeeManagement/ChangeLeaveStatus?leaveId=${leaveId}&status=${status}`;
+  return this.http.get(url); 
+}
+getHRDashboardData(): Observable<any> {
+    return this.http.get('/api/EmployeeManagement/GetHRDashboard');
+  }
+getEmployeeDashboardData(empId: number): Observable<any> {
+  const params = { id: empId.toString() };
+  return this.http.get('/api/EmployeeManagement/GetEmployeeDashboard', { params });
+}
+
 }

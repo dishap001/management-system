@@ -26,7 +26,7 @@
 <div class="card-actions">
   <!-- If Admin, show Approve button -->
   <ng-container *ngIf="masterService.loggedUserData?.role === 'Admin'; else employeeActions">
-    <button class="btn-success" (click)="onApprove(leave)">Approve</button>
+    <button class="btn-success" (click)="onApprove(leave.leaveId)">Approve</button>
   </ng-container>
 
   <!-- For Employees/HR, show Edit and Cancel -->
